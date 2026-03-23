@@ -1,0 +1,28 @@
+parameters:
+  atoolo_seo.sitemap.max_urls_per_sitemap: 2000
+
+services:
+
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  Atoolo\Extranet\Controller\:
+    resource: '../src/Controller'
+
+  Atoolo\Extranet\Service\:
+    resource: '../src/Service'
+
+  Atoolo\Extranet\Security\GraphQlDefaultAccessConfigProcessor:
+    arguments:
+      - "@?security.helper"
+    tags:
+      - { name: overblog_graphql.definition_config_processor, priority: 1024 }
+
+  Atoolo\Extranet\Security\ControllerDefaultSecurityListener:
+    arguments:
+      - "@?security.helper"
+    tags:
+      - kernel.event_subscriber
+
