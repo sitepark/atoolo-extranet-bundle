@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Atoolo\Extranet\Security;
 
+use Overblog\GraphQLBundle\Controller\GraphController;
 use ReflectionClass;
 use ReflectionException;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -29,6 +30,7 @@ class ControllerDefaultSecurityListener implements EventSubscriberInterface
      */
     public function onController(ControllerEvent $event): void
     {
+
         $siteMode = $_SERVER['SITE_MODE'] ?? '';
 
         if ($siteMode !== 'extranet') {
@@ -60,6 +62,11 @@ class ControllerDefaultSecurityListener implements EventSubscriberInterface
         }
 
         [$object, $method] = $controller;
+
+        // Access control is handled via GraphQLDefaultAccessConfigProcessor
+        if ($object instanceof GraphController) {
+            return true;
+        }
 
         $reflectionClass = new ReflectionClass($object);
         $reflectionMethod = $reflectionClass->getMethod($method);
