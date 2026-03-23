@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Atoolo\Seo;
+namespace Atoolo\Extranet;
 
 use Exception;
 use Symfony\Component\Config\FileLocator;
