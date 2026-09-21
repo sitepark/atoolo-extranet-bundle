@@ -57,7 +57,7 @@ class ControllerDefaultSecurityListener implements EventSubscriberInterface
      */
     private function hasSecurityAttribute(callable $controller): bool
     {
-        if (!is_array($controller) || count($controller) !== 2) {
+        if (!is_array($controller)) {
             return false;
         }
 
